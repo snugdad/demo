@@ -1,44 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    To run the project, type npm i && npm run start in the root directory of salt-water. The haulers table is configured to pull from localhost:5000 but you can change the baseURL for it in actions/api/fetchCollection. I have a db.json file with all of the json data Randal sent to me. Just run json-server --watch db.json --port <your-port>. 
 
-## Available Scripts
+## Each table has 3 sections:
+>**grid**: Describes the table's configuration and meta data related to **how it looks**, and **its capabilities as related to kendo** (sorting, filtering, styles etc). In addition, we can configure this section to represent the tables **Constraint Validation Parameters**. Currently the only thing
+implemented is columnNames.
 
-In the project directory, you can run:
+>**collection**: Describes the tables current pool of data displayed to the user. This data will be an immutable local copy of the data and validators will typically copy from this 
+pool to verify an item. 
 
-### `npm start`
+>**validation**: Describes the current **Data Processing Pools**. Most data validation request/response values will
+end up here. I anticipate this being the largest reducer for any table. It is currently set up like a collection, routing requests for single items to its validEntries hash table, and
+creating new entries by id. Any errors in the request currently
+set the invalidEntries with the id and the error response from
+the server.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To create a new table: 
+    
+    1) Create the actions you want (I've left a demo instance in actions/api/fetchCollections.js that pretty much spells it out)
+    2) Add your table into the state tree
+    3) modify the tables root reducer below the to include a route for your new table
+    4) Add a reducer for your table by just copy and pasting one of the others in reducers/api/tables/index
+    5.) Ensure that your tables actions are using the common validation and collection reducer
+    6.) dispatch your action to test at src/index.js
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Using the axiosConfig file, demo actions and demo reducers, the view should automatcially generate for any data set given that you've configured the grid section properly.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
