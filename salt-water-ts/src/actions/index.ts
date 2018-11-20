@@ -1,12 +1,27 @@
 import { assignHttpActionCreator } from './http'
 
 
-const assignActionCreator = (entityID: any, actionGroup: string, actionName: string) => {
-    switch(actionGroup) {
-        case 'http':
-            return assignHttpActionCreator(entityID.key, entityID.key, actionName);
-        default:
-            return
-    }
+const actionCreators = {
+    http: assignHttpActionCreator,
 }
 
+
+export default class {
+    public entityID: any
+    public actions: any;
+    public errors: Error[];
+
+    public constructor(entityID: any, actionGroupName: string) {
+        this.entityID = entityID;
+        const actionNames = Object.keys(actionGroupName);
+        this.actions = this.createActionGroup(actionNames, actionGroupName)
+    }
+
+    createActionGroup(actionNames: string[], actionGroupName: string) {
+        const actions: any = {}
+        actionNames.forEach(name => {
+            actions[name] = actionCreators[actionGroupName](this.entityID, name); 
+        })
+        return actions;
+    }
+}

@@ -1,8 +1,6 @@
 import LiquidTraceActionGroup from './ActionGroup'
+import * as initialState from '../initState/Entity'
 
-interface IVisualComponentInitialState {
-    type: string;
-  }
 
   interface IActionGroups {
     index: string[];
@@ -15,15 +13,16 @@ interface IVisualComponentInitialState {
   }
   
 class LiquidTraceEntity {
-    private _identifiers;
-    public component;
-    public actionGroups;
-    public validation;
-    public collection;
+    private _identifiers: any;
+    public component: any;
+    public actionGroups: any;
+    public validation: any;
+    public collection: any;
 
 
-    public constructor({ identifiers, component, actionGroups, collection, validation }){
-      this._identifiers = this.processIdentifiers(identifiers) // process later
+    public constructor({ identifiers, actionGroups, collection, component, validation }: initialState.Entity) {
+      this._identifiers = this.processIdentifiers(identifiers);
+
       this.component = this.createReactComponent(component);
       this.actionGroups = this.createActionGroups(actionGroups);
 
@@ -46,7 +45,7 @@ class LiquidTraceEntity {
       return identifier;
     }
 
-    createReactComponent(initialState: IVisualComponentInitialState) {
+    createReactComponent(initialState: initialState.ReactComponent) {
       const component: any = {}
       switch(initialState.type) {
         case 'kendo-grid':
@@ -58,20 +57,20 @@ class LiquidTraceEntity {
       }
     }
 
-    createActionGroups(initialState: IActionGroups) {
+    createActionGroups(initialState: initialState.ActionGroups) {
       const actionGroups: any = {};
 
       initialState.index.forEach(groupName => 
         actionGroups[groupName] = new LiquidTraceActionGroup(this._identifiers, initialState[groupName]))
     }
 
-    setupValidation(initialState: any) {
+    setupValidation<T>(initialState: initialState.Validation<T>) {
       /* set up validations for type of data that we need to operate on set up methods for createCollection */
       const validation: any = {};
       return validation;
     }
 
-    setupCollection(initialState: any) {
+    setupCollection<T>(initialState: initialState.Collection<T>) {
       /* call getAll to get and use the validations to verify data integrity */
       const collection: any = {};
       return collection;

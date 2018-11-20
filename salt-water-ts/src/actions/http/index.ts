@@ -1,7 +1,6 @@
 import httpClient from '../../httpClient'
 import { createAction } from 'typesafe-actions'
 
-
 const { endpoints } = httpClient
 
 module httpActionCreators {
@@ -26,9 +25,9 @@ module httpActionCreators {
     })
 }
 
-export const assignHttpActionCreator = (entity: any, resource: string, actionName: string) => {
-    if (!httpClient.endpoints.hasOwnProperty(resource)) {
-        httpClient.createEntity({name: resource});
+export const assignHttpActionCreator = (entityID: any, actionName: string) => {
+    if (!httpClient.endpoints.hasOwnProperty(entityID.key)) {
+        httpClient.createEntity({name: entityID.key});
     }
-    return httpActionCreators[actionName](entity, resource);
+    return httpActionCreators[actionName](entityID.title, entityID.key);
 }
