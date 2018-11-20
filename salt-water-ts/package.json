@@ -1,0 +1,55 @@
+{
+  "name": "salt-water-ts",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^3.4.0",
+    "@progress/kendo-data-query": "^1.5.0",
+    "@progress/kendo-drawing": "^1.5.7",
+    "@progress/kendo-react-dateinputs": "^2.2.0",
+    "@progress/kendo-react-dialogs": "^2.2.0",
+    "@progress/kendo-react-dropdowns": "^2.2.0",
+    "@progress/kendo-react-grid": "^2.2.0",
+    "@progress/kendo-react-inputs": "^2.2.0",
+    "@progress/kendo-react-intl": "^2.2.0",
+    "@progress/kendo-react-pdf": "^2.2.0",
+    "@progress/kendo-theme-default": "^2.57.0",
+    "@progress/kendo-ui": "^2018.3.1024",
+    "@types/react-redux": "^6.0.9",
+    "@types/redux-logger": "^3.0.6",
+    "@types/redux-promise-middleware": "0.0.11",
+    "axios": "^0.18.0",
+    "json-server": "^0.14.0",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-redux": "^5.1.1",
+    "react-scripts-ts": "^4.0.8",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.4",
+    "redux-logger": "^3.0.6",
+    "redux-observable": "^1.0.0",
+    "redux-promise-middleware": "^5.1.1",
+    "redux-thunk": "^2.3.0",
+    "rxjs": "^6.3.3",
+    "typesafe-actions": "^2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.5",
+    "@types/react": "^16.7.3",
+    "@types/react-dom": "^16.0.9",
+    "typescript": "^3.1.6"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
