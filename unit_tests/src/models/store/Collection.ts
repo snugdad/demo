@@ -1,0 +1,6 @@
+
+export {
+    ICollectionConfig,
+    ICollection,
+
+};

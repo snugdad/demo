@@ -7,12 +7,12 @@ const config = {
 }
 
 const httpClient = new LiquidTraceClient(config);
-const { endpoints } = httpClient
+const { endpoints } = httpClient;
 
 module httpActionCreators {
     export const getAll = (entity: string, resource: string) => 
         createAction(`${entity}/GET_ALL`, resolve => {
-            return () => resolve(endpoints[resource].getAll())
+            return () => resolve(endpoints[resource].getAll());
     })
 
     export const getOne = (entity: string, resource: string) => 

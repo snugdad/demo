@@ -1,8 +1,8 @@
 import * as InitialState from './startup'
-
+import { ContainerID } from '../../types'
 
 class LiquidTraceContainer {
-    private _identifiers: any;
+    private _identifiers: ContainerID;
     public view: any;
     public actionGroups: any;
     public validation: any;

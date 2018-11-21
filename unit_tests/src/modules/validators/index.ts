@@ -1,6 +1,5 @@
-import { IValidator, Validator, CompoundValidator, IValidationResponse, ValidationType } from '../../models/app/validators'
-
-
+import {  Validator, CompoundValidator, ValidationType } from '../../models/app/validators';
+import { IValidator, IValidationResponse } from '../../models/container/store/Validation';
 
 export module Validators {
 	export function combine<T>(... validators: IValidator<T>[]): IValidator<T> {

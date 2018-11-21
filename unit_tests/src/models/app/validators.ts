@@ -1,44 +1,4 @@
-class ValidationType {
-	public static readonly ERROR: ValidationType = new ValidationType(1);
-	public static readonly WARNING: ValidationType = new ValidationType(2);
-	public static readonly INFO: ValidationType = new ValidationType(3);
-
-	private readonly _value: number;
-
-	private constructor(value: number) {
-		this._value = value;
-	}
-
-	public get value() {
-		return this._value;
-	}
-}
-
-interface IValidationContext<T> {
-	readonly progress: IValidationProgress<T>;
-	readonly state: any;
-}
-
-interface IValidationMessage {
-	readonly type: ValidationType;
-	readonly caption: string;
-}
-
-interface IValidationProgress<T> {
-	readonly context: { value: T, message: IValidationMessage };
-	cancel(): void;
-}
-
-interface IValidationResponse<T> {
-	readonly value: T;
-	readonly hasError: boolean;
-	readonly wasCanceled: boolean;
-	readonly validationMessages: IValidationMessage[];
-}
-
-interface IValidator<T> {
-	Validate(value: T, failFast?: boolean, context?: IValidationContext<T>): Promise<IValidationResponse<T>>;
-}
+import {IValidationContext, IValidationMessage, IValidationResponse, IValidator} from '../store/Validation';
 
 class ValidationResponse<T> implements IValidationResponse<T> {
 	public value: T;
@@ -93,12 +53,6 @@ class CompoundValidator<T> implements IValidator<T> {
 }
 
 export {
-    ValidationType,
-    IValidationContext,
-    IValidationMessage,
-    IValidationProgress,
-    IValidationResponse,
-	IValidator,
 	ValidationResponse,
 	Validator,
 	DebounceValidator,

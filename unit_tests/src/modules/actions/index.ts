@@ -1,27 +1,34 @@
 import { assignHttpActionCreator } from './http'
-
+import { ContainerID } from '../../models/store'
+interface IActionGroup {
+    entityID: ContainerID
+}
 
 const actionCreators = {
     http: assignHttpActionCreator,
 }
 
 
-export default class {
-    public entityID: any
+class ActionGroup {
+    public entityID: any;
+    public actionNames: string[];
+    public groupName: string;
     public actions: any;
     public errors: Error[];
 
-    public constructor(entityID: any, actionGroupName: string) {
+    public constructor(entityID: any, groupName: string, actionNames: string []) {
         this.entityID = entityID;
-        const actionNames = Object.keys(actionGroupName);
-        this.actions = this.createActionGroup(actionNames, actionGroupName)
+        this.actionNames = actionNames;
+        this.actions = this.createActionGroup(actionNames, groupName);
     }
 
     createActionGroup(actionNames: string[], actionGroupName: string) {
-        const actions: any = {}
+        const actions: any = {};
         actionNames.forEach(name => {
             actions[name] = actionCreators[actionGroupName](this.entityID, name); 
         })
         return actions;
     }
 }
+
+export default ActionGroup;
