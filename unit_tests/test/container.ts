@@ -5,10 +5,13 @@ import 'mocha';
 
 
 describe('Basic Container', () => {
-  it('returns a Basic Container from a Startup State Object containing only Identifiers', () => {
-    let result = new LiquidTraceContainer(StartupState.basic)
+  let result = new LiquidTraceContainer(StartupState.basic)
+  it('returns a new Container initialized from a Startup State Object containing Identifiers', () => {
     expect(result.identifiers())
         .to.have.all.keys('id', 'key', 'title')
+  })
+  it('has all other properties assigned to empty objects', () => {
+
     expect(result.actionGroups).to.deep.equal({});
     expect(result.collection).to.deep.equal({});
     expect(result.validation).to.deep.equal({});
