@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import '@progress/kendo-theme-default/dist/all.css'
 import * as ActionGroup from './ducks/UserManagement'
@@ -29,6 +29,8 @@ interface UserGridProps {
   sort: SortDescriptor[];
   filter: CompositeFilterDescriptor;
   inEdit: string | null;
+  editLocked: boolean;
+  cancelChanges(rollbackData: User[]): void;
   enterCreateMode(): void;
   onSortChange(e: GridSortChangeEvent): void;
   onRowClick(e: GridRowClickEvent): void;
@@ -90,10 +92,15 @@ class UserGrid extends Component<UserGridProps, {}> {
 
   private _columns: JSX.Element[];
 
+  
   public constructor (props: UserGridProps) {
     super(props);
-    props.getAllUsers();
+
     this._columns = this.createColumns(header)
+  }
+
+  componentDidUpdate() {
+    // this.props.getAllUsers();
   }
 
   createColumns(header: any): JSX.Element[] {
@@ -126,25 +133,30 @@ class UserGrid extends Component<UserGridProps, {}> {
       data,
       backup,
       sort,
+      cancelChanges,
       enterCreateMode,
       onSortChange,
       onRowClick,
       onItemChange,
       onFilterChange,
       assignData,
+      getAllUsers,
       inEdit,
+      editLocked,
       filter } = this.props
 
       backup.length > 0 && data.length === 0 && assignData(backup)
       const tableData = filterBy(data.map((user: User) => 
         Object.assign({ inEdit: user.id === inEdit}, user)), filter)
+      // const tableData = data
+        
 
     return (
       <React.Fragment>
       
       <Paper style={styles.paper}>
       <Grid style={styles.grid}
-        data={orderBy(tableData, sort)}
+        data={editLocked ? tableData : orderBy(tableData, sort)}
         sort={sort}
         filter={filter}
         editField="inEdit"
@@ -158,11 +170,14 @@ class UserGrid extends Component<UserGridProps, {}> {
         reorderable
       >
       <GridToolbar>
-        <ToolbarButtons enterCreateMode={enterCreateMode}/>
+        <ToolbarButtons/>
       </GridToolbar>
         {this._columns}
       </Grid>
       </Paper>
+      <Button onClick={getAllUsers}>
+        Get All 
+      </Button>
       </React.Fragment>
     );
   }
@@ -172,6 +187,7 @@ function mapStateToProps(state: DevGridState) {
   return {
     data: state.editor.data,
     inEdit: state.editor.inEdit,
+    editLocked: state.editor.editLocked,
     backup: state.collection.data,
     sort: state.sort,
     filter: state.filter,
@@ -180,6 +196,9 @@ function mapStateToProps(state: DevGridState) {
 
 function mapDispatchToProps(dispatch: any) {
   return {
+    cancelChanges: (rollbackData: User[]) => {
+      dispatch(ActionGroup.cancelChanges(rollbackData))
+    },
     enterCreateMode: () => {
       dispatch(ActionGroup.enterCreateMode())
     },

@@ -24,7 +24,7 @@ export type User = {
     lastName: string,
     username: string,
     password: string,
-    isActive: string,
+    isActive: boolean,
     isEntryAdmin: boolean,
     isListAdmin: boolean,
     isLocationManager: boolean,
@@ -32,3 +32,16 @@ export type User = {
     isUserAdmin: boolean,
 }
 
+export const newUserTemplate: User = {
+    id: 'temp',
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "Circular>>0x08<<",
+    isActive: true,
+    isEntryAdmin: false,
+    isListAdmin: false,
+    isLocationManager: false,
+    isOperatorAdmin: false,
+    isUserAdmin: false,
+}

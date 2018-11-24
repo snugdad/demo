@@ -1,8 +1,12 @@
 import { SortDescriptor, CompositeFilterDescriptor } from "@progress/kendo-data-query";
+import { User } from '../types'
+import { newUserTemplate } from '../types'
 export type GridState = {
-
+    validation: {
+        toValidate: string | null,
+        schema: any,
+    }
     collection: {
-
         fetching: boolean,
         fetched: boolean,
         errors: Error[],
@@ -20,9 +24,11 @@ export type GridState = {
 }
 
 const initialState: GridState = {
-
+    validation: {
+        toValidate: null,
+        schema: {},
+    },
     collection: {
-
         fetching: false,
         fetched: false,
         errors: [],
@@ -55,11 +61,6 @@ const filter = (state: any =initialState.filter, action: any) => {
     }
 }
 
-// const root = (state: any =initialState, action: any) => {
-//     switch(action.type) {
-        
-// }
-
 const editor = (state: any =initialState.editor, action: any) => {
     switch(action.type) {
         case 'users/CHANGE_EDIT_ID':
@@ -68,22 +69,29 @@ const editor = (state: any =initialState.editor, action: any) => {
                 inEdit: action.payload, 
                 editIndex: state.data.findIndex((u: any) => u.id === action.payload)
             }
-    case 'users/CHANGE_ITEM':
-        const { field, value } = action.payload
-        const index = state.editIndex
-        let change = [...state.data]
-        change[index] = {...change[index], [field]: value}
-        console.log(action.payload.id, change[index].id)
-        return {
-            ...state,
-            data: [...change],
-        }
-
+        case 'users/CANCEL_CHANGES':
+            return {
+                ...state,
+                inEdit: null,
+                editLocked: false,
+                data: action.payload
+            }
+        case 'users/CHANGE_ITEM':
+            const { id, field, value } = action.payload
+            console.log(state.data.map((u: User) => {
+                return u.id === id ? {...u, [field]: value} : u
+            }))
+            return {
+                ...state,
+                data: state.data.map((u: User) => {
+                   return u.id === id ? {...u, [field]: value} : u;
+                }),
+            }
         case 'users/ASSIGN_DATA':
             return {...state, data: action.payload};
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
-            newData.unshift({id: "temp"});
+            newData.unshift(newUserTemplate);
             return {
                 ...state,
                 data: newData,
@@ -108,7 +116,6 @@ const sort = (state: any =initialState.sort, action: any) => {
 
 const collection = (state: any = initialState.collection, action: any) => {
     switch(action.type) {
-        case: 'users/CHANGE_EDIT_ID'
 
         case 'users/GET_ALL_PENDING':
             return {...state, fetching: true }

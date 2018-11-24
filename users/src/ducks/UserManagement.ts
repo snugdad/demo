@@ -48,7 +48,13 @@ export interface UpdateUser {
 export interface EnterCreateMode {
     type: 'users/ENTER_CREATE_MODE',
     payload: any
-}   
+}
+
+export interface CancelChanges {
+    type: 'users/CANCEL_CHANGES',
+    payload: User[],
+}
+
 /* Action Creators */
 
 export const getAllUsers = (): GetAllUsers => ({
@@ -93,7 +99,12 @@ export const assignData = (data: User[]): AssignData => ({
 
 export const enterCreateMode = (): EnterCreateMode => ({
     type: 'users/ENTER_CREATE_MODE',
-    payload: {editLocked: true, editID: "temp"}
+    payload: { editLocked: true, editID: "temp" }
+})
+
+export const cancelChanges = (rollbackData: User[]): CancelChanges => ({
+    type: 'users/CANCEL_CHANGES',
+    payload: rollbackData,
 })
 
 
