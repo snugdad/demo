@@ -10,7 +10,7 @@ interface IActionGroups {
     }
 }
 
-interface IActionGroupsLiveState {
+interface IActionGroupsRunTime {
     index: string[],
     actionGroups: IActionGroups
 }
@@ -22,12 +22,12 @@ interface ICollections<T> {
     }
 }
 
-interface ICollectionsLiveState {
+interface ICollectionsRunTime {
     config: CollectionConfig,
     fetching: boolean,
     fetched: boolean,
     index: string[],
-    collections: ICollections<any>
+    collections: ICollections<any> [],
 }
 
 interface IValidationResults<T> {
@@ -38,7 +38,7 @@ interface IValidationResults<T> {
     }  
 }
 
-interface IValidationLiveState {
+interface IValidationRunTime {
     fetching: string | null,
     fetched: string[],
     toValidate: string[],
@@ -47,18 +47,21 @@ interface IValidationLiveState {
     results: IValidationResults<any>
 }
 
+interface IValidationStartupState {
+    validators: Validator<any> [],
+    setupValidation: () => IValidationRunTime
+}
 
-interface IContainerLiveState {
+interface IContainerRunTime {
     containerID: ContainerID,
-    actionGroups?: IActionGroupsLiveState,
-    collections?: ICollectionsLiveState,
-    validation?: IValidationLiveState
-
+    actionGroups?: IActionGroupsRunTime,
+    collections?: ICollectionsRunTime,
+    validation?: IValidationRunTime
 }
 
 export {
     IActionGroups,
-    IActionGroupsLiveState,
-    ICollection,
-    IContainerLiveState
+    IActionGroupsRunTime,
+    ICollections,
+    IContainerRunTime
 };

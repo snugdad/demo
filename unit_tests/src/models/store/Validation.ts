@@ -28,16 +28,10 @@ interface IValidator<T> {
 
 
 
-interface IValidationStartupState<T> {
-    validators: IValidator<T> [],
-    setupValidation: () => IValidationLiveState
-}
-
 export {
     IValidationContext,
     IValidationMessage,
     IValidationProgress,
     IValidationResponse,
-    IValidator,
-    IValidationStartupState
+    IValidator
 }

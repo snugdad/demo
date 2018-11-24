@@ -1,0 +1,18 @@
+ {
+     "users": [
+    {
+      "id": "5bf72d2e24728e4fe6f47550",
+      "username": "Kate Reilly",
+      "firstName": "Sheppard",
+      "lastName": "Schwartz",
+      "password": "mollit",
+      "isActive": true,
+      "isEntryAdmin": true,
+      "isListAdmin": false,
+      "isLocationManager": true,
+      "isOperatorAdmin": true,
+      "isUserAdmin": true
+    }
+    
+  ]
+}
