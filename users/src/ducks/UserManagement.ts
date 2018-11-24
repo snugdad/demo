@@ -50,6 +50,10 @@ export interface EnterCreateMode {
     payload: any
 }
 
+export interface SoftDeleteUser {
+    type: 'users/SOFT_DELETE',
+}
+
 export interface CancelChanges {
     type: 'users/CANCEL_CHANGES',
     payload: User[],
@@ -71,6 +75,11 @@ export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>) => ({
     type: 'users/UPDATE',
     payload: client.endpoints.users.update(toUpdate)
 });
+
+export const softDeleteUser = (): SoftDeleteUser => ({
+    type: 'users/SOFT_DELETE',
+
+})
 
 export const changeSort = (sort: SortDescriptor[]): SortChange => ({
     type: 'users/CHANGE_SORT',

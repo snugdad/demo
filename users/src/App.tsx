@@ -99,7 +99,7 @@ class UserGrid extends Component<UserGridProps, {}> {
     this._columns = this.createColumns(header)
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     // this.props.getAllUsers();
   }
 

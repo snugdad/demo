@@ -66,7 +66,8 @@ const editor = (state: any =initialState.editor, action: any) => {
         case 'users/CHANGE_EDIT_ID':
             return {
                 ...state, 
-                inEdit: action.payload, 
+                inEdit: action.payload,
+                editLocked: true,
                 editIndex: state.data.findIndex((u: any) => u.id === action.payload)
             }
         case 'users/CANCEL_CHANGES':
@@ -76,11 +77,17 @@ const editor = (state: any =initialState.editor, action: any) => {
                 editLocked: false,
                 data: action.payload
             }
+        case 'users/SOFT_DELETE':
+            return {
+                ...state,
+                data: [ 
+                        ...state.data.map((u: User) => {
+                        return u.id === state.inEdit ? {...u, isActive: false} : u
+                    })
+                ]
+            }
         case 'users/CHANGE_ITEM':
             const { id, field, value } = action.payload
-            console.log(state.data.map((u: User) => {
-                return u.id === id ? {...u, [field]: value} : u
-            }))
             return {
                 ...state,
                 data: state.data.map((u: User) => {

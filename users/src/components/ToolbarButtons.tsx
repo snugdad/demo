@@ -12,27 +12,30 @@ import * as ActionGroup from '../ducks/UserManagement';
 import { User } from '../types';
 import { connect } from 'react-redux';
 import { userPassesConstraintValidation as valid } from '../validation'
+import { Action } from '@progress/kendo-react-dateinputs/dist/npm/calendar/models';
  
 
-const styles = (theme: any) => ({
+const styles = ({
   button: {
-    margin: theme.spacing.unit,
+    margin: '5px'
   },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
-  iconSmall: {
+  icon: {
     fontSize: 20,
-  },
+  }
 });
 
 class ToolbarButtons extends Component <any, {}> {
 
   render () {
-    const { classes, cancelChanges, enterCreateMode, backupData, tableData, inEdit, createUser, updateUser } = this.props;
+    const {
+      cancelChanges,
+      enterCreateMode,
+      backupData,
+      tableData,
+      inEdit,
+      createUser,
+      updateUser,
+      softDeleteUser } = this.props;
     const userInEdit = tableData.find((user: User) => user.id === inEdit);
     const backupUserData = backupData.find((user: User) => user.id === inEdit);
     const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
@@ -40,24 +43,25 @@ class ToolbarButtons extends Component <any, {}> {
   return (
     
     <div>
-      <Button variant="contained" size="small" color="secondary" className={classes.button}>
-      <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+      <Button  variant="contained" size="small" color="secondary" style={styles.button}
+        onClick={softDeleteUser}>
+      <DeleteIcon style={styles.icon} />
         Delete
       </Button>
-      <Button variant="contained" size="small"color="primary" className={classes.button}
+      <Button variant="contained" size="small"color="primary" style={styles.button}
         onClick={enterCreateMode}>
-      <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)}/>
+      <AddIcon style={styles.icon}/>
         Create
       </Button>
-      <Button variant="contained" size="small" className={classes.button} 
+      <Button variant="contained" size="small" style={styles.button} 
         disabled={!changed || !valid(userInEdit)}
         onClick={e => inEdit === 'temp' ? createUser(userInEdit): updateUser(userInEdit)}>
-        <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+        <SaveIcon style={styles.icon} />
         Save
       </Button>
-      <Button variant="contained" size="small" className={classes.button}
+      <Button variant="contained" size="small" style={styles.button}
         onClick={e => cancelChanges(backupData)}>
-        <CancelIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+        <CancelIcon style={styles.icon} />
         Cancel
       </Button>
 
@@ -88,6 +92,9 @@ function mapDispatchToProps (dispatch: any) {
     },
     updateUser: (updateUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.updateUser(updateUser))
+    },
+    softDeleteUser: () =>{
+      dispatch(ActionGroup.softDeleteUser())
     }
   }
 }
