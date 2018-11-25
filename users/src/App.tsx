@@ -92,7 +92,6 @@ class UserGrid extends Component<UserGridProps, {}> {
 
   private _columns: JSX.Element[];
 
-  
   public constructor (props: UserGridProps) {
     super(props);
 
@@ -133,8 +132,6 @@ class UserGrid extends Component<UserGridProps, {}> {
       data,
       backup,
       sort,
-      cancelChanges,
-      enterCreateMode,
       onSortChange,
       onRowClick,
       onItemChange,
@@ -145,18 +142,16 @@ class UserGrid extends Component<UserGridProps, {}> {
       editLocked,
       filter } = this.props
 
-      backup.length > 0 && data.length === 0 && assignData(backup)
+      backup.length > 0 && inEdit===null && assignData(backup)
       const tableData = filterBy(data.map((user: User) => 
         Object.assign({ inEdit: user.id === inEdit}, user)), filter)
-      // const tableData = data
-        
 
     return (
       <React.Fragment>
       
       <Paper style={styles.paper}>
       <Grid style={styles.grid}
-        data={editLocked ? tableData : orderBy(tableData, sort)}
+        data={inEdit ? tableData : orderBy(tableData, sort)}
         sort={sort}
         filter={filter}
         editField="inEdit"

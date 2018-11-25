@@ -68,7 +68,7 @@ export const getAllUsers = (): GetAllUsers => ({
 
 export const createUser = (newUser: User): CreateUser => ({
     type: 'users/CREATE',
-    payload: client.endpoints.users.create(newUser),
+    payload: client.endpoints.users.create({...newUser, id: ""}),
 });
 
 export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>) => ({
@@ -78,7 +78,6 @@ export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>) => ({
 
 export const softDeleteUser = (): SoftDeleteUser => ({
     type: 'users/SOFT_DELETE',
-
 })
 
 export const changeSort = (sort: SortDescriptor[]): SortChange => ({

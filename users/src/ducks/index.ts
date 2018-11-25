@@ -70,29 +70,36 @@ const editor = (state: any =initialState.editor, action: any) => {
                 editLocked: true,
                 editIndex: state.data.findIndex((u: any) => u.id === action.payload)
             }
-        case 'users/CANCEL_CHANGES':
+        case 'users/SOFT_DELETE':
+            return {
+                ...state,
+                data: [
+                    ...state.data.map((u: User) => {
+                        return u.id === state.inEdit ? { ...u, isActive: false } : u
+                    })
+                ]
+            }
+        case 'users/UPDATE_FULFILLED':
             return {
                 ...state,
                 inEdit: null,
                 editLocked: false,
-                data: action.payload
-            }
-        case 'users/SOFT_DELETE':
-            return {
-                ...state,
-                data: [ 
-                        ...state.data.map((u: User) => {
-                        return u.id === state.inEdit ? {...u, isActive: false} : u
-                    })
-                ]
+                editIndex: -1,
             }
         case 'users/CHANGE_ITEM':
             const { id, field, value } = action.payload
             return {
                 ...state,
                 data: state.data.map((u: User) => {
-                   return u.id === id ? {...u, [field]: value} : u;
+                    return u.id === id ? { ...u, [field]: value } : u;
                 }),
+            }
+        case 'users/CANCEL_CHANGES':
+            return {
+                ...state,
+                inEdit: null,
+                editLocked: false,
+                data: action.payload
             }
         case 'users/ASSIGN_DATA':
             return {...state, data: action.payload};
@@ -123,7 +130,14 @@ const sort = (state: any =initialState.sort, action: any) => {
 
 const collection = (state: any = initialState.collection, action: any) => {
     switch(action.type) {
-
+        case 'users/UPDATE_FULFILLED':
+            console.log(action.payload)
+            return {
+                    ...state,
+                    data: state.data.map((u: User) => {
+                        return u.id === action.payload.id ? { ...action.payload.data } : u
+                    })
+                }
         case 'users/GET_ALL_PENDING':
             return {...state, fetching: true }
         case 'users/GET_ALL_FULFILLED':
@@ -139,12 +153,10 @@ const collection = (state: any = initialState.collection, action: any) => {
                 fetching: false, 
                 errors: [...state.errors, action.payload] 
         }
-
         default:
             return state;
     }
 }
-
 
 export {
    editor, sort, collection, filter
