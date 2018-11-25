@@ -94,7 +94,4 @@ function mapDispatchToProps (dispatch: any) {
   }
 }
 
-
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(ToolbarButtons);

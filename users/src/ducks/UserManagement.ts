@@ -62,7 +62,9 @@ export interface MarkCollectionUpdated {
     type: 'users/MARK_COLLECTION_UPDATED'
 }
 
-
+export interface CloseAlertDialog {
+    type: 'CLOSE_ALERT_DIALOG'
+}
 
 /* Action Creators */
 
@@ -119,6 +121,9 @@ export const cancelChanges = (rollbackData: User[]): CancelChanges => ({
     payload: rollbackData,
 })
 
+export const closeAlertDialog = (): CloseAlertDialog => ({
+    type: 'CLOSE_ALERT_DIALOG',
+})
 
 export type Action = 
     GetAllUsers | CreateUser | UpdateUser |

@@ -1,7 +1,12 @@
 import { SortDescriptor, CompositeFilterDescriptor } from "@progress/kendo-data-query";
 import { User } from '../types'
 import { newUserTemplate } from '../types'
+import { errors } from "@telerik/kendo-intl";
 export type GridState = {
+    error: {
+        alertOpen: boolean,
+        errors: any,
+    }
     validation: {
         toValidate: string | null,
         schema: any,
@@ -25,6 +30,10 @@ export type GridState = {
 }
 
 const initialState: GridState = {
+    error : {
+        alertOpen: false,
+        errors: []
+    },
     validation: {
         toValidate: null,
         schema: {},
@@ -52,6 +61,23 @@ const initialState: GridState = {
         }]
     },
     sort: [],
+}
+
+const error = (state: any=initialState.error, action: any) => {
+    switch(action.type) {
+        case 'DISPLAY_ERROR':
+            return {
+                alertOpen: true,
+                errors: [...state.errors, action.payload]
+            }
+        case 'CLOSE_ALERT_DIALOG':
+            return {
+                ...state,
+                alertOpen: false,
+            }
+        default:
+            return state;
+    }
 }
 
 const filter = (state: any =initialState.filter, action: any) => {
@@ -159,5 +185,5 @@ const collection = (state: any = initialState.collection, action: any) => {
 }
 
 export {
-   editor, sort, collection, filter
+   error, editor, sort, collection, filter
 }

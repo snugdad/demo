@@ -1,17 +1,17 @@
 import React from 'react';
-
+import * as ActionGroup from '../ducks/UserManagement'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
+import { connect } from 'react-redux';
 
-export default class extends React.Component <any, {}> {
+class AlertDialog extends React.Component <any, {}> {
     render () {
-    const { visible, title, hideAlertDialog } = this.props
+    const { visible, errors, close} = this.props
+        console.log(errors[0])
         return (
             <React.Fragment>
-                {visible && <Dialog title={title} onClose={hideAlertDialog}>
-                    <p style={{ margin: "25px", textAlign: "center" }}>Are you sure you want to continue?</p>
+                {visible && <Dialog title={"Error"} onClose={close}>
+                    <p style={{ margin: "25px", textAlign: "center" }}>{errors.length > 0 ? errors[0].message : null}</p>
                     <DialogActionsBar>
-                        <button className="k-button" onClick={hideAlertDialog}>No</button>
-                        <button className="k-button" onClick={dialogAction}>Yes</button>
                     </DialogActionsBar>
                 </Dialog>}
             </React.Fragment>
@@ -19,8 +19,19 @@ export default class extends React.Component <any, {}> {
     }
 }
 
-function mapStateToProps (state: any){
+function mapStateToProps(state: any) {
     return {
-        state.alertDialog
+        visible: state.error.alertOpen,
+        errors: state.error.errors,
     }
 }
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        close: () => {
+            dispatch(ActionGroup.closeAlertDialog())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlertDialog)

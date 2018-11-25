@@ -21,7 +21,10 @@ import {
   filterBy } from '@progress/kendo-data-query';
 
 import { Paper } from '@material-ui/core'
-import { CheckboxCell, ToolbarButtons } from './components'
+import { 
+  CheckboxCell, 
+  ToolbarButtons, 
+  AlertDialog } from './components'
 
 interface UserGridProps {
   data: User[];
@@ -41,15 +44,15 @@ interface UserGridProps {
 }
 
 const header = {
-  id: { title: 'ID', filter: 'text' },
+  // id: { title: 'ID', filter: 'text' },
   username: { title: 'Username', filter: 'text' },
   firstName: { title: 'First Name', filter: 'text' },
   lastName: { title: 'Last Name', filter: 'text'},
-  isActive: { 
-    title: 'Active',
-    filter: 'boolean',
-    cell: CheckboxCell,
-  },
+  // isActive: { 
+  //   title: 'Active',
+  //   filter: 'boolean',
+  //   cell: CheckboxCell,
+  // },
   isEntryAdmin: { 
     title: 'Entry Admin',
     filter: 'boolean',
@@ -135,10 +138,8 @@ class UserGrid extends Component<UserGridProps, {}> {
       onRowClick,
       onItemChange,
       onFilterChange,
-      syncData,
       getAllUsers,
       inEdit,
-      editLocked,
       filter } = this.props
 
     const tableData = orderBy(filterBy(data.map((user: User) => 
@@ -146,7 +147,7 @@ class UserGrid extends Component<UserGridProps, {}> {
 
     return (
       <React.Fragment>
-      
+      <AlertDialog/>
       <Paper style={styles.paper}>
       <Grid style={styles.grid}
         data={tableData}

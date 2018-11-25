@@ -5,7 +5,7 @@
       "firstName": "Whites",
       "lastName": "Shannon",
       "password": "0.5370461398220969",
-      "isActive": true,
+      "isActive": false,
       "isEntryAdmin": true,
       "isListAdmin": true,
       "isLocationManager": true,
@@ -15,7 +15,7 @@
     },
     {
       "id": "e235d86b-b3af-4465-88aa-267ced55d053",
-      "firstName": "BIGOOOOOLLBOOOTY",
+      "firstName": "What",
       "lastName": "Williams",
       "password": "-1.501218373991529",
       "isActive": true,
@@ -43,7 +43,7 @@
       "id": "aVIXzeF",
       "firstName": "isss",
       "lastName": "aguy",
-      "username": "Thisss",
+      "username": "Wellpt",
       "password": "Circular>>0x08<<",
       "isActive": true,
       "isEntryAdmin": false,
@@ -51,6 +51,19 @@
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false
+    },
+    {
+      "id": "pwVGZjv",
+      "firstName": "Ben",
+      "lastName": "Jones",
+      "username": "BJones",
+      "password": "Circular>>0x08<<",
+      "isActive": true,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": true,
+      "isUserAdmin": true
     }
   ]
 }
