@@ -9,6 +9,7 @@ export type GridState = {
     collection: {
         fetching: boolean,
         fetched: boolean,
+        updated: boolean,
         errors: Error[],
         data: any [],
     }
@@ -31,6 +32,7 @@ const initialState: GridState = {
     collection: {
         fetching: false,
         fetched: false,
+        updated: false,
         errors: [],
         data: [],
     },
@@ -49,7 +51,7 @@ const initialState: GridState = {
             value: true, 
         }]
     },
-    sort: [{field: 'username', dir: 'asc'}],
+    sort: [],
 }
 
 const filter = (state: any =initialState.filter, action: any) => {
@@ -131,14 +133,20 @@ const sort = (state: any =initialState.sort, action: any) => {
 const collection = (state: any = initialState.collection, action: any) => {
     switch(action.type) {
         case 'users/UPDATE_FULFILLED':
-            console.log(action.payload)
             return {
                     ...state,
                     data: state.data.map((u: User) => {
                         return u.id === action.payload.id ? { ...action.payload.data } : u
                     })
                 }
-        case 'users/GET_ALL_PENDING':
+        case 'users/CREATE_FULFILLED':
+                const newData = [...state.data];
+                newData.unshift(action.payload.data);
+            return {
+                ...state,
+                data: newData,
+            }
+        case 'users/GET_ALL':
             return {...state, fetching: true }
         case 'users/GET_ALL_FULFILLED':
             return {

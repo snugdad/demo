@@ -60,6 +60,7 @@ class ToolbarButtons extends Component <any, {}> {
         Save
       </Button>
       <Button variant="contained" size="small" style={styles.button}
+        disabled={!inEdit}
         onClick={e => cancelChanges(backupData)}>
         <CancelIcon style={styles.icon} />
         Cancel

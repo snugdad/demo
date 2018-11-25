@@ -59,6 +59,12 @@ export interface CancelChanges {
     payload: User[],
 }
 
+export interface MarkCollectionUpdated {
+    type: 'users/MARK_COLLECTION_UPDATED'
+}
+
+
+
 /* Action Creators */
 
 export const getAllUsers = (): GetAllUsers => ({

@@ -130,7 +130,6 @@ class UserGrid extends Component<UserGridProps, {}> {
   render() {
     const { 
       data,
-      backup,
       sort,
       onSortChange,
       onRowClick,
@@ -142,16 +141,15 @@ class UserGrid extends Component<UserGridProps, {}> {
       editLocked,
       filter } = this.props
 
-      backup.length > 0 && inEdit===null && assignData(backup)
-      const tableData = filterBy(data.map((user: User) => 
-        Object.assign({ inEdit: user.id === inEdit}, user)), filter)
+    const tableData = orderBy(filterBy(data.map((user: User) => 
+      Object.assign({ inEdit: user.id === inEdit}, user)), filter), sort)
 
     return (
       <React.Fragment>
       
       <Paper style={styles.paper}>
       <Grid style={styles.grid}
-        data={inEdit ? tableData : orderBy(tableData, sort)}
+        data={tableData}
         sort={sort}
         filter={filter}
         editField="inEdit"
