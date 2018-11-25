@@ -66,28 +66,12 @@ const filter = (state: any =initialState.filter, action: any) => {
 const editor = (state: any =initialState.editor, action: any) => {
     switch(action.type) {
         case 'users/CHANGE_EDIT_ID':
-            return {
+            return (!state.editLocked && !state.inEdit) ? {
                 ...state, 
                 inEdit: action.payload,
                 editLocked: true,
                 editIndex: state.data.findIndex((u: any) => u.id === action.payload)
-            }
-        case 'users/SOFT_DELETE':
-            return {
-                ...state,
-                data: [
-                    ...state.data.map((u: User) => {
-                        return u.id === state.inEdit ? { ...u, isActive: false } : u
-                    })
-                ]
-            }
-        case 'users/UPDATE_FULFILLED':
-            return {
-                ...state,
-                inEdit: null,
-                editLocked: false,
-                editIndex: -1,
-            }
+            } : state;
         case 'users/CHANGE_ITEM':
             const { id, field, value } = action.payload
             return {
@@ -103,8 +87,14 @@ const editor = (state: any =initialState.editor, action: any) => {
                 editLocked: false,
                 data: action.payload
             }
-        case 'users/ASSIGN_DATA':
-            return {...state, data: action.payload};
+        case 'users/SYNC_DATA':
+            return {
+                ...state, 
+                inEdit: null,
+                editLocked: false,
+                editIndex: -1,
+                data: action.payload,
+            };
         case 'users/ENTER_CREATE_MODE':
             const newData = [...state.data];
             newData.unshift(newUserTemplate);
@@ -136,7 +126,9 @@ const collection = (state: any = initialState.collection, action: any) => {
             return {
                     ...state,
                     data: state.data.map((u: User) => {
-                        return u.id === action.payload.id ? { ...action.payload.data } : u
+                        return u.id === action.payload.data.id ? {
+                             ...action.payload.data 
+                            } : u
                     })
                 }
         case 'users/CREATE_FULFILLED':

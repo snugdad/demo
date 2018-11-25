@@ -14,6 +14,12 @@ import { createEpicMiddleware } from 'redux-observable'
 const rootReducer = combineReducers(reducers)
 const epicMiddleware = createEpicMiddleware();
 
+/*
+    Things to do tomorrow: 
+        Add in modal 'ARE YOU SURE' form for deleting
+        Add Password editing capabilities
+        Add epic that filters xhr request errors into collection
+*/
 
 export default function configureStore() { 
     const createdStore = createStore( 
@@ -29,7 +35,5 @@ ReactDOM.render(
         <UserGrid />
     </Provider>, document.getElementById('root')
 );
-
-
 
 serviceWorker.unregister();

@@ -37,7 +37,7 @@ interface UserGridProps {
   onItemChange(e: GridItemChangeEvent): void;
   onFilterChange(e: GridFilterChangeEvent): void;
   getAllUsers(): void;
-  assignData(data: User[]): void;
+  syncData(data: User[]): void;
 }
 
 const header = {
@@ -135,7 +135,7 @@ class UserGrid extends Component<UserGridProps, {}> {
       onRowClick,
       onItemChange,
       onFilterChange,
-      assignData,
+      syncData,
       getAllUsers,
       inEdit,
       editLocked,
@@ -208,8 +208,8 @@ function mapDispatchToProps(dispatch: any) {
     onFilterChange: (e: GridFilterChangeEvent) => {
       dispatch(ActionGroup.changeFilter(e.filter))
     },
-    assignData: (data: User[]) => {
-      dispatch(ActionGroup.assignData(data));
+    syncData: (data: User[]) => {
+      dispatch(ActionGroup.syncData(data));
     },
   }
 }

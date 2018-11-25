@@ -7,8 +7,8 @@ import HttpClient from '../client'
 const client = new HttpClient({baseURL: 'http://localhost:5000'});
 client.createEntity({name: 'users'});
 
-export interface AssignData {
-    type: 'users/ASSIGN_DATA',
+export interface SyncData {
+    type: 'users/SYNC_DATA',
     payload: User[],
 }
 
@@ -43,11 +43,10 @@ export interface CreateUser {
 }
 export interface UpdateUser {
     type: 'users/UPDATE',
-    payload: any,
+    payload: Promise<User>,
 }
 export interface EnterCreateMode {
     type: 'users/ENTER_CREATE_MODE',
-    payload: any
 }
 
 export interface SoftDeleteUser {
@@ -106,14 +105,13 @@ export const changeFilter = (filter: CompositeFilterDescriptor): ChangeFilter =>
     payload: filter,
 })
 
-export const assignData = (data: User[]): AssignData => ({
-    type: 'users/ASSIGN_DATA',
+export const syncData = (data: User[]): SyncData => ({
+    type: 'users/SYNC_DATA',
     payload: data,
 })
 
 export const enterCreateMode = (): EnterCreateMode => ({
     type: 'users/ENTER_CREATE_MODE',
-    payload: { editLocked: true, editID: "temp" }
 })
 
 export const cancelChanges = (rollbackData: User[]): CancelChanges => ({
