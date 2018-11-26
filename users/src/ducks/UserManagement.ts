@@ -51,6 +51,7 @@ export interface EnterCreateMode {
 
 export interface SoftDeleteUser {
     type: 'users/SOFT_DELETE',
+    payload: Promise<User>,
 }
 
 export interface CancelChanges {
@@ -64,6 +65,14 @@ export interface MarkCollectionUpdated {
 
 export interface CloseAlertDialog {
     type: 'CLOSE_ALERT_DIALOG'
+}
+
+export interface TogglePasswordColumn {
+    type: 'users/TOGGLE_PASSWORD_COLUMN'
+}
+
+export interface ToggleDeleteConfirmation {
+    type: 'users/TOGGLE_DELETE_CONFIRMATION'
 }
 
 /* Action Creators */
@@ -83,8 +92,9 @@ export const updateUser = (toUpdate: Partial<Pick<User, 'id'>>) => ({
     payload: client.endpoints.users.update(toUpdate)
 });
 
-export const softDeleteUser = (): SoftDeleteUser => ({
+export const softDeleteUser = (toDelete: User): SoftDeleteUser => ({
     type: 'users/SOFT_DELETE',
+    payload: client.endpoints.users.update(toDelete),
 })
 
 export const changeSort = (sort: SortDescriptor[]): SortChange => ({
@@ -123,6 +133,14 @@ export const cancelChanges = (rollbackData: User[]): CancelChanges => ({
 
 export const closeAlertDialog = (): CloseAlertDialog => ({
     type: 'CLOSE_ALERT_DIALOG',
+})
+
+export const togglePasswordColumn = (): TogglePasswordColumn => ({
+    type: 'users/TOGGLE_PASSWORD_COLUMN'
+})
+
+export const toggleDeleteConfirmation = (): ToggleDeleteConfirmation => ({
+    type: 'users/TOGGLE_DELETE_CONFIRMATION',
 })
 
 export type Action = 

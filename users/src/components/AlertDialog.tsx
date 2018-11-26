@@ -2,17 +2,22 @@ import React from 'react';
 import * as ActionGroup from '../ducks/UserManagement'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { connect } from 'react-redux';
+import { Typography } from '@material-ui/core'
+const styles = ({
+    typeography: {
+
+    } 
+})
 
 class AlertDialog extends React.Component <any, {}> {
     render () {
     const { visible, errors, close} = this.props
-        console.log(errors[0])
         return (
             <React.Fragment>
-                {visible && <Dialog title={"Error"} onClose={close}>
-                    <p style={{ margin: "25px", textAlign: "center" }}>{errors.length > 0 ? errors[0].message : null}</p>
-                    <DialogActionsBar>
-                    </DialogActionsBar>
+                {visible && errors.length > 0 && 
+                <Dialog title={"Network Error"} onClose={close}>
+                <p>Error: {errors[0].message}</p>
+
                 </Dialog>}
             </React.Fragment>
         );

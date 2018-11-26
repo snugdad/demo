@@ -33,6 +33,7 @@ interface UserGridProps {
   filter: CompositeFilterDescriptor;
   inEdit: string | null;
   editLocked: boolean;
+  showPasswordColumn: boolean;
   cancelChanges(rollbackData: User[]): void;
   enterCreateMode(): void;
   onSortChange(e: GridSortChangeEvent): void;
@@ -48,11 +49,11 @@ const header = {
   username: { title: 'Username', filter: 'text' },
   firstName: { title: 'First Name', filter: 'text' },
   lastName: { title: 'Last Name', filter: 'text'},
-  // isActive: { 
-  //   title: 'Active',
-  //   filter: 'boolean',
-  //   cell: CheckboxCell,
-  // },
+  isActive: { 
+    title: 'Active',
+    filter: 'boolean',
+    cell: CheckboxCell,
+  },
   isEntryAdmin: { 
     title: 'Entry Admin',
     filter: 'boolean',
@@ -140,7 +141,8 @@ class UserGrid extends Component<UserGridProps, {}> {
       onFilterChange,
       getAllUsers,
       inEdit,
-      filter } = this.props
+      filter,
+      showPasswordColumn } = this.props
 
     const tableData = orderBy(filterBy(data.map((user: User) => 
       Object.assign({ inEdit: user.id === inEdit}, user)), filter), sort)
@@ -166,7 +168,9 @@ class UserGrid extends Component<UserGridProps, {}> {
       <GridToolbar>
         <ToolbarButtons/>
       </GridToolbar>
-        {this._columns}
+        {[this._columns, 
+          showPasswordColumn ? 
+          <Column key="password" field="password" title="Password"/> : null]}
       </Grid>
       </Paper>
       <Button onClick={getAllUsers}>
@@ -182,6 +186,7 @@ function mapStateToProps(state: DevGridState) {
     data: state.editor.data,
     inEdit: state.editor.inEdit,
     editLocked: state.editor.editLocked,
+    showPasswordColumn: state.ui.showPasswordColumn,
     backup: state.collection.data,
     sort: state.sort,
     filter: state.filter,

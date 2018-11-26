@@ -3,6 +3,10 @@ import { User } from '../types'
 import { newUserTemplate } from '../types'
 import { errors } from "@telerik/kendo-intl";
 export type GridState = {
+    ui: {
+        showPasswordColumn: boolean,
+        showDeleteConfirmation: boolean,
+    }
     error: {
         alertOpen: boolean,
         errors: any,
@@ -22,7 +26,6 @@ export type GridState = {
         editIndex: number,
         inEdit: string | null,
         editLocked: boolean,
-        backup: any[],
         data: any[],
     }
     filter: CompositeFilterDescriptor,
@@ -30,6 +33,10 @@ export type GridState = {
 }
 
 const initialState: GridState = {
+    ui : {
+        showPasswordColumn: false,
+        showDeleteConfirmation: false,
+    },
     error : {
         alertOpen: false,
         errors: []
@@ -49,7 +56,6 @@ const initialState: GridState = {
         editIndex: -1,
         inEdit: null,
         editLocked: false,
-        backup: [],
         data: [],
     },
     filter: {
@@ -61,6 +67,17 @@ const initialState: GridState = {
         }]
     },
     sort: [],
+}
+
+const ui = (state: any = initialState.ui, action: any ) => {
+    switch(action.type) {
+        case 'users/TOGGLE_PASSWORD_COLUMN':
+            return { ...state, showPasswordColumn: !state.showPasswordColumn }
+        case 'users/TOGGLE_DELETE_CONFIRMATION':
+            return { ...state, showDeleteConfirmation: !state.showDeleteConfirmation }
+        default:
+            return state;
+    }
 }
 
 const error = (state: any=initialState.error, action: any) => {
@@ -185,5 +202,5 @@ const collection = (state: any = initialState.collection, action: any) => {
 }
 
 export {
-   error, editor, sort, collection, filter
+   ui, error, editor, sort, collection, filter
 }

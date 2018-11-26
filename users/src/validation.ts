@@ -17,24 +17,5 @@ export const userSchema: any = Joi.object().keys({
 
 export function userPassesConstraintValidation (user: User) {
 	const result: any = Joi.validate({ ...user }, userSchema)
-	console.log(user, result)
 	return result.error === null;
 }
-
-// const user: User =     
-// {
-// 	"id":"20b57c1a-892d-4b75-b926-e54dd3a6b2c0",
-// 	"firstName":"Acevedo",
-// 	"lastName":"Poole",
-// 	"username":"APoole",
-// 	"password":"-0.5203957959239598",
-// 	"isActive":true,
-// 	"isEntryAdmin":false,
-// 	"isListAdmin":false,
-// 	"isLocationManager":false,
-// 	"isOperatorAdmin":false,
-// 	"isUserAdmin":true,
-
-// }
-
-// console.log(userPassesConstraintValidation(user))

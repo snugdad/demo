@@ -4,45 +4,86 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add'
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel'
+import VpnKey from '@material-ui/icons/VpnKey'
 import * as ActionGroup from '../ducks/UserManagement';
 import { User } from '../types';
 import { connect } from 'react-redux';
 import { userPassesConstraintValidation as valid } from '../validation'
+import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 
  
 
 const styles = ({
+  container: {
+    display: "flex",
+  },
   button: {
     margin: '5px'
   },
   icon: {
-    fontSize: 20,
+    fontSize: 18,
+    marginRight: '5px'
+  },
+  buttonRight: {
+    margin: '5px',
+    marginLeft: 'auto'
   }
 });
+
+const DeleteDialog = (props: any ) => {
+  const { visible, softDeleteUser, close, userInEdit } = props;
+  return (
+  <React.Fragment>
+    {visible &&  <Dialog title={"Confirm Delete"} onClose={close}>
+      <p style={{ margin: "25px", textAlign: "center" }}>Are you sure you want to delete this user?</p>
+    <DialogActionsBar>
+    <div style={styles.container}>
+      <Button variant="contained" size="small" color="secondary" style={styles.button}>
+        Cancel
+        </Button>
+      <Button variant="contained" size="small" color="primary" style={styles.buttonRight}
+        onClick={e => softDeleteUser({...userInEdit, isActive: false})}>
+        Confirm
+        </Button>
+      </div>
+    </DialogActionsBar>
+    </Dialog>}
+    </React.Fragment>
+  )
+}
+
 
 class ToolbarButtons extends Component <any, {}> {
 
   render () {
     const {
+      togglePasswordColumn,
+      showPasswordColumn,
       cancelChanges,
       enterCreateMode,
       backupData,
       tableData,
       inEdit,
       createUser,
-      updateUser } = this.props;
+      updateUser,
+      showDeleteConfirmation,
+      toggleDeleteConfirmation,
+      softDeleteUser } = this.props;
     const userInEdit = tableData.find((user: User) => user.id === inEdit);
     const backupUserData = backupData.find((user: User) => user.id === inEdit);
     const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
   return (
     
-    <div>
+  <div style={styles.container} >
+    <DeleteDialog userInEdit={userInEdit} visible={showDeleteConfirmation} softDeleteUser={softDeleteUser} close={toggleDeleteConfirmation}/>
       <Button  variant="contained" size="small" color="secondary" style={styles.button}
-        onClick={e => updateUser({...userInEdit, isActive: false})}>
+        disabled={inEdit === null}
+        onClick={toggleDeleteConfirmation}>
       <DeleteIcon style={styles.icon} />
         Delete
       </Button>
       <Button variant="contained" size="small"color="primary" style={styles.button}
+        disabled={inEdit !== null}
         onClick={enterCreateMode}>
       <AddIcon style={styles.icon}/>
         Create
@@ -59,6 +100,11 @@ class ToolbarButtons extends Component <any, {}> {
         <CancelIcon style={styles.icon} />
         Cancel
       </Button>
+      <Button variant="contained" size="small" style={styles.buttonRight}
+        onClick={togglePasswordColumn}>
+        <VpnKey style={styles.icon}/>
+        {showPasswordColumn ? "Finish" : "Manage Passwords"}
+      </Button>
 
     </div>
   );
@@ -70,7 +116,9 @@ function mapStateToProps (state: any) {
     backupData: state.collection.data,
     tableData: state.editor.data,
     inEdit: state.editor.inEdit,
-    classes: styles
+    classes: styles,
+    showPasswordColumn: state.ui.showPasswordColumn,
+    showDeleteConfirmation: state.ui.showDeleteConfirmation
   }
 }
 
@@ -88,8 +136,14 @@ function mapDispatchToProps (dispatch: any) {
     updateUser: (updateUser: Partial<Pick<User, 'id'>>) => {
       dispatch(ActionGroup.updateUser(updateUser))
     },
-    softDeleteUser: () =>{
-      dispatch(ActionGroup.softDeleteUser())
+    softDeleteUser: (toDelete: User) =>{
+      dispatch(ActionGroup.softDeleteUser(toDelete))
+    },
+    togglePasswordColumn: () => {
+      dispatch(ActionGroup.togglePasswordColumn())
+    },
+    toggleDeleteConfirmation: () => {
+      dispatch(ActionGroup.toggleDeleteConfirmation())
     }
   }
 }
