@@ -3,8 +3,8 @@
     {
       "id": "2b860e13-7959-4264-a2c6-0a8409031c91",
       "firstName": "Whites",
-      "lastName": "Shannon",
-      "password": "0.5370461398220969",
+      "lastName": "Shannons",
+      "password": "eli[ui",
       "isActive": false,
       "isEntryAdmin": true,
       "isListAdmin": true,
@@ -23,7 +23,7 @@
       "isListAdmin": true,
       "isLocationManager": true,
       "isOperatorAdmin": true,
-      "isUserAdmin": false,
+      "isUserAdmin": true,
       "username": "CWilliadsfsadfms"
     },
     {
@@ -32,10 +32,10 @@
       "lastName": "NewUser",
       "username": "BnewUserfadsfdsaf",
       "password": "superGuy",
-      "isActive": false,
+      "isActive": true,
       "isEntryAdmin": true,
-      "isListAdmin": false,
-      "isLocationManager": false,
+      "isListAdmin": true,
+      "isLocationManager": true,
       "isOperatorAdmin": false,
       "isUserAdmin": false
     },
@@ -64,6 +64,58 @@
       "isLocationManager": false,
       "isOperatorAdmin": true,
       "isUserAdmin": true
+    },
+    {
+      "id": "M7PftYS",
+      "firstName": ";ln.n.n.,m.,mm ",
+      "lastName": "mm,b,n.kn,mn,m",
+      "username": "\\[ol'pk'",
+      "password": "kjhkjhkjhk",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "SQKSzWw",
+      "firstName": "Bob",
+      "lastName": "Towny",
+      "username": "BobTowny",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "6rSn2hg",
+      "firstName": "sdfasdfadsf",
+      "lastName": "dsfasdfsadf",
+      "username": "fsdfaf",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
+    },
+    {
+      "id": "BnpxK3Z",
+      "firstName": "thorton",
+      "lastName": "babbbdy",
+      "username": "bob fdsfsdf",
+      "password": "Circular>>0x08<<",
+      "isActive": false,
+      "isEntryAdmin": false,
+      "isListAdmin": false,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
     }
   ]
 }

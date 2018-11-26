@@ -25,29 +25,6 @@ export default function configureStore() {
 }
 export const store = configureStore();
 
-export const foo = (): any => ({
-    type: 'FOO',
-    // When you throw an error, always instantiate a new Error object with `new Error()`
-    payload: new Promise((resolve, reject) => {
-        axios.get('http//localhost:5000/users')
-            .then((response: any) => {
-                resolve(response.json().then((json: any) => (
-                    json
-                )))
-            })
-            .catch(({response, request, message}: any) => {
-                reject( 
-                    response ? new Error(`Server responded with status ${response.status}, ${response.statusText}`) :
-                    request  ? new Error(`No response from server: request details: ${JSON.stringify(request)}`) :
-                    new Error(`Error in request setup: ${message}`)
-                )
-            })
-  })
-})
-
-//store.dispatch({type: "GET", payload: axios.get('http://localhcost:5000/nothere')})
-store.dispatch(foo())
-//store.dispatch({type:'REJECTED', payload: new Error('! Im an error !')})
 ReactDOM.render(
     <Provider store={store}>
         <UserGrid />
@@ -55,3 +32,30 @@ ReactDOM.render(
 );
 
 serviceWorker.unregister();
+
+/**
+ * The following is an example of how to create an action that displays an error to the user,
+ * simply uncomment the dispatch below to fire the action when the application starts.
+ */
+
+export const networkErrorAction = (): any => ({
+    type: 'NETWORK_ERROR',
+    /* When you throw an error, always instantiate a new Error object with `new Error()` */
+    payload: new Promise((resolve, reject) => {
+        axios.get('http//localhost:5000/notAnEndpoint')
+            .then((response: any) => {
+                resolve(response.json().then((json: any) => (
+                    json
+                )))
+            })
+            .catch(({ response, request, message }: any) => {
+                reject(
+                    response ? new Error(`Server responded with status ${response.status}, ${response.statusText}`) :
+                        request ? new Error(`No response from server: request details: ${JSON.stringify(request)}`) :
+                            new Error(`Error in request setup: ${message}`)
+                )
+            })
+    })
+})
+
+//store.dispatch(networkErrorAction());

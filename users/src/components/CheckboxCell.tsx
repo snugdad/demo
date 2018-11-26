@@ -11,7 +11,7 @@ const InEditCheckbox = (props: any) =>{
             <input type='checkbox'
              id={field} 
              className='k-checkbox' 
-             checked={value}
+             defaultChecked={value}
              onChange={(e: any) =>{
                  e.dataItem = dataItem
                  e.field = field,

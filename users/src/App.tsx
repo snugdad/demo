@@ -44,8 +44,15 @@ interface UserGridProps {
   syncData(data: User[]): void;
 }
 
+/**
+ * Comment out the the columns you dont want, add ones you do.
+ * The rules are only that the title is a string, and the filter 
+ * corresponds to the type of the field. The field name, and array key
+ * are passed as the property key.
+ */
+
 const header = {
-  // id: { title: 'ID', filter: 'text' },
+  //id: { title: 'ID', filter: 'text' },
   username: { title: 'Username', filter: 'text' },
   firstName: { title: 'First Name', filter: 'text' },
   lastName: { title: 'Last Name', filter: 'text'},
@@ -81,6 +88,9 @@ const header = {
   },
 }
 
+/**
+ * Controls the css properties of the container components
+ */
 const styles = {
   paper: {
     padding: 8 * 3,
@@ -98,19 +108,20 @@ class UserGrid extends Component<UserGridProps, {}> {
 
   public constructor (props: UserGridProps) {
     super(props);
-
     this._columns = this.createColumns(header)
-  }
-
-  componentDidMount() {
-    // this.props.getAllUsers();
   }
 
   createColumns(header: any): JSX.Element[] {
     return Object.keys(header).map((key) => {
         const { title, filter } = header[key]
         const hasCheckboxCell = filter === 'boolean'
-
+      /**
+       * Every boolean cell has an applicable override attached to the header.
+       * You can change whether this component is displayed as default, or with
+       * the cell override by uncommenting/commenting the cell property. 
+       * CheckboxCell is not finished, but it works for getting the feel 
+       * of how it would look. If you like it, I can get that 100%.
+       */
       return hasCheckboxCell ? 
         <Column 
           key={key}
@@ -119,7 +130,7 @@ class UserGrid extends Component<UserGridProps, {}> {
           filter={filter}
           resizable
           editor="boolean"
-          //cell={(props) => <CheckboxCell {...props}/>}
+          // cell={(props) => <CheckboxCell {...props}/>}
           /> :
         <Column 
           key={key} 
@@ -130,7 +141,6 @@ class UserGrid extends Component<UserGridProps, {}> {
           />  
     })
   }
-
   render() {
     const { 
       data,
@@ -144,8 +154,12 @@ class UserGrid extends Component<UserGridProps, {}> {
       filter,
       showPasswordColumn } = this.props
 
-    const tableData = orderBy(filterBy(data.map((user: User) => 
-      Object.assign({ inEdit: user.id === inEdit}, user)), filter), sort)
+      /**
+       * This function orders and sorts the data on every render when
+       * the sort and filter descriptors have at least one element. 
+       */
+      const tableData = orderBy(filterBy(data.map((user: User) => 
+        Object.assign({ inEdit: user.id === inEdit}, user)), filter), sort)
 
     return (
       <React.Fragment>
@@ -168,18 +182,30 @@ class UserGrid extends Component<UserGridProps, {}> {
       <GridToolbar>
         <ToolbarButtons/>
       </GridToolbar>
-        {[this._columns, 
-          showPasswordColumn ? 
-          <Column key="password" field="password" title="Password"/> : null]}
+    
+        {[ this._columns,
+        /**
+         * Since the password column is transient, this is it's configuration, separate from
+         * the group returned by this.generateColumns() called in the constructor.
+         */
+        showPasswordColumn ? <Column key="password" field="password" title="Password"/> : null ]}
       </Grid>
       </Paper>
       <Button onClick={getAllUsers}>
-        Get All 
+        Get Data 
       </Button>
       </React.Fragment>
     );
   }
 }
+
+/**
+ * The mapStateToProps method receives the value of store.getState() as its
+ * argument. The key corresponds to the name of the props key in the component.
+ * For example, data: state.editor.data, provides the value of state.editor.data,
+ * to props.data in the component (props.data = state.editor.data). This is where
+ * you can map out what state the component receives from the Provider as props.
+ */
 
 function mapStateToProps(state: DevGridState) {
   return {
@@ -192,7 +218,13 @@ function mapStateToProps(state: DevGridState) {
     filter: state.filter,
   }
 }
-
+/**
+ * The mapDispatchToProps function provides the methods available to be called
+ * by the component as props. A method name in the UserGrid component 
+ * matching one of the names below is an alias for dispatching that action
+ * using store.dispatch() method provided as its argument.
+ *    
+ */
 function mapDispatchToProps(dispatch: any) {
   return {
     cancelChanges: (rollbackData: User[]) => {

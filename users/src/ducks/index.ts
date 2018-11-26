@@ -174,6 +174,15 @@ const collection = (state: any = initialState.collection, action: any) => {
                             } : u
                     })
                 }
+        case 'users/SOFT_DELETE_FULFILLED':
+            return {
+                ...state,
+                data: state.data.map((u: User) => {
+                    return u.id === action.payload.data.id ? {
+                        ...action.payload.data
+                    } : u
+                })
+            }
         case 'users/CREATE_FULFILLED':
                 const newData = [...state.data];
                 newData.unshift(action.payload.data);

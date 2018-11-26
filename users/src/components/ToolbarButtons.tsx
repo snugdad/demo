@@ -75,20 +75,27 @@ class ToolbarButtons extends Component <any, {}> {
   return (
     
   <div style={styles.container} >
-    <DeleteDialog userInEdit={userInEdit} visible={showDeleteConfirmation} softDeleteUser={softDeleteUser} close={toggleDeleteConfirmation}/>
-      <Button  variant="contained" size="small" color="secondary" style={styles.button}
-        disabled={inEdit === null}
+    <DeleteDialog 
+      userInEdit={userInEdit} 
+      visible={showDeleteConfirmation} 
+      softDeleteUser={softDeleteUser} 
+      close={toggleDeleteConfirmation} />
+      <Button  
+        variant="contained" size="small" color="secondary" style={styles.button}
+        disabled={inEdit === null || inEdit === 'temp'}
         onClick={toggleDeleteConfirmation}>
       <DeleteIcon style={styles.icon} />
         Delete
       </Button>
-      <Button variant="contained" size="small"color="primary" style={styles.button}
+      <Button 
+        variant="contained" size="small"color="primary" style={styles.button}
         disabled={inEdit !== null}
         onClick={enterCreateMode}>
       <AddIcon style={styles.icon}/>
         Create
       </Button>
-      <Button variant="contained" size="small" style={styles.button} 
+      <Button 
+        variant="contained" size="small" style={styles.button} 
         disabled={!changed || !valid(userInEdit)}
         onClick={e => inEdit === 'temp' ? createUser(userInEdit): updateUser(userInEdit)}>
         <SaveIcon style={styles.icon} />

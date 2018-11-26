@@ -1,6 +1,6 @@
 import  { syncData, toggleDeleteConfirmation } from '../ducks/UserManagement'
 import { combineEpics } from 'redux-observable'
-import { map, filter, mergeMap, withLatestFrom} from 'rxjs/operators'
+import { map, filter,delay, withLatestFrom} from 'rxjs/operators'
 import { pipe } from 'rxjs'
 
 const logValue = (payload: any) => ({
@@ -27,7 +27,7 @@ const handleRequestError = (action$: any, state$: any) => action$.pipe(
 
 const handleSoftDelete = (action$: any, state$: any) => action$.pipe(
     filter(({ type }: any) => type === 'users/SOFT_DELETE'),
-    map((action) => toggleDeleteConfirmation())
+    map(() => toggleDeleteConfirmation())
 )
 
 export default combineEpics(syncTableWithCollection, handleRequestError, handleSoftDelete)
