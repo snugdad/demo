@@ -8,7 +8,9 @@ Install all dependencies
 
 ### `npm run server`
 
-Launches a fake rest api server.
+Launches a fake rest api server. You can refer
+to the console you launched it in to see the logged
+request type, endpoint, status, and time
 
 ### `npm run start`
 

@@ -1364,6 +1364,19 @@
       "isLocationManager": false,
       "isOperatorAdmin": false,
       "isUserAdmin": false
+    },
+    {
+      "id": "zJOs21U",
+      "firstName": "Dusty",
+      "lastName": "Donkers",
+      "username": "Ddonkers",
+      "password": "AValueforPasswords",
+      "isActive": true,
+      "isEntryAdmin": true,
+      "isListAdmin": true,
+      "isLocationManager": false,
+      "isOperatorAdmin": false,
+      "isUserAdmin": false
     }
   ]
 }
