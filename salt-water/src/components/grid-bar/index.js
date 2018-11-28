@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper'
 export const GridContainer = (props) => {
     return (
       <Paper component="div" style={{ padding: 8 * 3 }} elevation={10}>
-        {props.children}
+        {...props.children}
       </Paper>
     );
 }
