@@ -15,7 +15,7 @@ const displayError = (error: any) => ({
 
 
 const syncTableWithCollection = (action$: any, state$: any) => action$.pipe(
-    filter(({ type }: any) => type.includes('FULFILLED')),
+    filter(({ type }: any) => type.includes('users/GET_ALL_FULFILLED')),
     withLatestFrom(state$),
     map(() => syncData(state$.value.collection.data))
 )
