@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers} from 'redux';
 import logger from 'redux-logger';
 import promise from 'redux-promise-middleware'
-import * as reducers from './ducks'
+import * as reducers from './reducers'
 
 import updateEpic from './epics'
 import UserGrid from './App';

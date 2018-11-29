@@ -1,4 +1,4 @@
-import  { syncData, toggleDeleteConfirmation } from '../ducks/UserManagement'
+import  { syncData, toggleDeleteConfirmation, togglePasswordModal } from '../actions'
 import { combineEpics } from 'redux-observable'
 import { map, filter,delay, withLatestFrom} from 'rxjs/operators'
 import { pipe } from 'rxjs'
@@ -15,7 +15,9 @@ const displayError = (error: any) => ({
 
 
 const syncTableWithCollection = (action$: any, state$: any) => action$.pipe(
-    filter(({ type }: any) => type.includes('users/GET_ALL_FULFILLED')),
+    filter(({ type }: any) => 
+        type === 'users/GET_ALL_FULFILLED' || 
+        type === 'users/CREATE_FULFILLED')                        ,
     withLatestFrom(state$),
     map(() => syncData(state$.value.collection.data))
 )
@@ -30,4 +32,9 @@ const handleSoftDelete = (action$: any, state$: any) => action$.pipe(
     map(() => toggleDeleteConfirmation())
 )
 
-export default combineEpics(syncTableWithCollection, handleRequestError, handleSoftDelete)
+
+export default combineEpics(
+    syncTableWithCollection, 
+    handleRequestError, 
+    handleSoftDelete
+    )

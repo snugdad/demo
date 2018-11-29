@@ -1,22 +1,46 @@
 import { SortDescriptor, CompositeFilterDescriptor } from "@progress/kendo-data-query";
 
-/* This describes the state object passed to the rootReducer at startup */
-export type GridState = {
-    collection: {
-        fetching: boolean,
-        fetched: boolean,
-        errors: Error[],
-        data: any [],
-    }
-    editor: {
-        inEdit: string | null,
-        editIndex: number,
-        data: any[],
-    }
-    filter: CompositeFilterDescriptor,
-    sort: SortDescriptor [],
+export type CollectionState = {
+    fetching: boolean,
+    fetched: boolean,
+    updated: boolean,
+    errors: Error[],
+    data: any [],
 }
 
+export type EditorState = {
+    editIndex: number,
+    inEdit: string | null,
+    userInEdit: User | null,
+    inCreateMode: boolean,
+    data: any[],
+}
+
+export type ErrorState = {
+    alertOpen: boolean,
+    errors: any,
+}
+
+export type UIState = {
+    showPasswordModal: boolean,
+    showDeleteConfirmation: boolean,
+}
+
+export type ValidationState = {
+    toValidate: string | null,
+    schema: any,
+}
+
+export type GridState = {
+    collection: CollectionState,
+    editor: EditorState,
+    error: ErrorState,
+    ui: UIState,
+    validation: ValidationState,
+    sort: SortDescriptor[],
+    filter: CompositeFilterDescriptor,
+
+}
 
 export type User = {
     id: string, 

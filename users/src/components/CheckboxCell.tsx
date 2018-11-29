@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { GridItemChangeEvent, GridCellProps } from '@progress/kendo-react-grid'
-import { changeItem } from '../ducks/UserManagement'
+import { changeUserData } from '../actions'
 
 const InEditCheckbox = (props: any) =>{
     const {dataItem, field, value, onItemChange} = props
@@ -53,7 +53,7 @@ class CheckboxCell extends React.Component<any, {}> {
 function mapDispatchToProps(dispatch: any) {
   return {
     onItemChange: (e: GridItemChangeEvent) => {
-      dispatch(changeItem(e.dataItem.id, e.field, e.value))
+      dispatch(changeUserData(e.dataItem.id, e.field, e.value))
     }
   }
 }

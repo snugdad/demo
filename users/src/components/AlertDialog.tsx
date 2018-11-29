@@ -1,9 +1,17 @@
 import React from 'react';
+<<<<<<< HEAD
+import * as ActionGroup from '../actions'
+import { Dialog } from '@progress/kendo-react-dialogs';
+import { connect } from 'react-redux';
+import { Typography } from '@material-ui/core'
+
+=======
 import * as ActionGroup from '../ducks/UserManagement'
 import { Dialog } from '@progress/kendo-react-dialogs';
 import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core'
 import { ui } from '../ducks';
+>>>>>>> 5b19420d784c2895a7cc7bcc6bbca1a96f642ef6
 const styles = ({
     typeography: {
 

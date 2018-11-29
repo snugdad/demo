@@ -5,13 +5,11 @@ import AddIcon from '@material-ui/icons/Add'
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel'
 import VpnKey from '@material-ui/icons/VpnKey'
-import * as ActionGroup from '../ducks/UserManagement';
+import * as ActionGroup from '../actions';
 import { User } from '../types';
 import { connect } from 'react-redux';
 import { userPassesConstraintValidation as valid } from '../validation'
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
-
- 
 
 const styles = ({
   container: {
@@ -58,20 +56,22 @@ class ToolbarButtons extends Component <any, {}> {
   render () {
     const {
       togglePasswordModal,
+<<<<<<< HEAD
+=======
       showPasswordModal,
+>>>>>>> 5b19420d784c2895a7cc7bcc6bbca1a96f642ef6
       cancelChanges,
       enterCreateMode,
       backupData,
-      tableData,
+      userInEdit,
       inEdit,
       createUser,
       updateUser,
       showDeleteConfirmation,
       toggleDeleteConfirmation,
       softDeleteUser } = this.props;
-    const userInEdit = tableData.find((user: User) => user.id === inEdit);
     const backupUserData = backupData.find((user: User) => user.id === inEdit);
-    const changed = JSON.stringify(userInEdit) !== JSON.stringify(backupUserData)
+    const changed = JSON.stringify(userInEdit[0]) !== JSON.stringify(backupUserData)
   return (
     
   <div style={styles.container} >
@@ -96,7 +96,7 @@ class ToolbarButtons extends Component <any, {}> {
       </Button>
       <Button 
         variant="contained" size="small" style={styles.button} 
-        disabled={!changed || !valid(userInEdit)}
+        disabled={!changed || !valid(userInEdit[0])}
         onClick={e => inEdit === 'temp' ? createUser(userInEdit): updateUser(userInEdit)}>
         <SaveIcon style={styles.icon} />
         Save
@@ -123,6 +123,7 @@ function mapStateToProps (state: any) {
     backupData: state.collection.data,
     tableData: state.editor.data,
     inEdit: state.editor.inEdit,
+    userInEdit: state.editor.userInEdit,
     classes: styles,
     showPasswordModal: state.ui.showPasswordModal,
     showDeleteConfirmation: state.ui.showDeleteConfirmation

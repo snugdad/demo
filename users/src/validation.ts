@@ -17,5 +17,6 @@ export const userSchema: any = Joi.object().keys({
 
 export function userPassesConstraintValidation (user: User) {
 	const result: any = Joi.validate({ ...user }, userSchema)
+	console.log(result);
 	return result.error === null;
 }

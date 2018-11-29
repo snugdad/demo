@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import '@progress/kendo-theme-default/dist/all.css'
-import * as UserActionGroup from './ducks/UserManagement'
-import { User, } from './types'
-import {GridState as DevGridState} from './ducks'
+import * as UserActionGroup from './actions'
+import { User, GridState} from './types'
+
 import {
   Grid,
   GridColumn as Column,
@@ -33,7 +33,11 @@ interface UserGridProps {
   sort: SortDescriptor[];
   filter: CompositeFilterDescriptor;
   inEdit: string | null;
+<<<<<<< HEAD
+  inCreateMode: boolean;
+=======
   editLocked: boolean;
+>>>>>>> 5b19420d784c2895a7cc7bcc6bbca1a96f642ef6
   onSortChange(e: GridSortChangeEvent): void;
   onRowClick(e: GridRowClickEvent): void;
   onItemChange(e: GridItemChangeEvent): void;
@@ -209,11 +213,15 @@ class UserGrid extends Component<UserGridProps, {}> {
  * you can pass what state the component receives from the Provider as props.
  */
 
-function mapStateToProps(state: DevGridState) {
+function mapStateToProps(state: GridState) {
   return {
     data: state.editor.data,
     inEdit: state.editor.inEdit,
+<<<<<<< HEAD
+    inCreateMode: state.editor.inCreateMode,
+=======
     editLocked: state.editor.editLocked,
+>>>>>>> 5b19420d784c2895a7cc7bcc6bbca1a96f642ef6
     sort: state.sort,
     filter: state.filter,
   }
@@ -235,7 +243,7 @@ function mapDispatchToProps(dispatch: any) {
       dispatch(UserActionGroup.selectRow(e.dataItem.id))
     },
     onItemChange: (e: GridItemChangeEvent) => {
-      dispatch(UserActionGroup.changeItem(e.dataItem.id, e.field, e.value))
+      dispatch(UserActionGroup.changeUserData(e.dataItem.id, e.field, e.value))
     },
     onFilterChange: (e: GridFilterChangeEvent) => {
       dispatch(UserActionGroup.changeFilter(e.filter))
