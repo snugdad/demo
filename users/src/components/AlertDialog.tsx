@@ -1,8 +1,9 @@
 import React from 'react';
 import * as ActionGroup from '../ducks/UserManagement'
-import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
+import { Dialog } from '@progress/kendo-react-dialogs';
 import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core'
+import { ui } from '../ducks';
 const styles = ({
     typeography: {
 

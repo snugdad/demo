@@ -4,7 +4,7 @@ import { newUserTemplate } from '../types'
 import { errors } from "@telerik/kendo-intl";
 export type GridState = {
     ui: {
-        showPasswordColumn: boolean,
+        showPasswordModal: boolean,
         showDeleteConfirmation: boolean,
     }
     error: {
@@ -25,6 +25,7 @@ export type GridState = {
     editor: {
         editIndex: number,
         inEdit: string | null,
+        userInEdit: User | null,
         editLocked: boolean,
         data: any[],
     }
@@ -34,7 +35,7 @@ export type GridState = {
 
 const initialState: GridState = {
     ui : {
-        showPasswordColumn: false,
+        showPasswordModal: false,
         showDeleteConfirmation: false,
     },
     error : {
@@ -55,6 +56,7 @@ const initialState: GridState = {
     editor: {
         editIndex: -1,
         inEdit: null,
+        userInEdit: null,
         editLocked: false,
         data: [],
     },
@@ -71,8 +73,8 @@ const initialState: GridState = {
 
 const ui = (state: any = initialState.ui, action: any ) => {
     switch(action.type) {
-        case 'users/TOGGLE_PASSWORD_COLUMN':
-            return { ...state, showPasswordColumn: !state.showPasswordColumn }
+        case 'users/TOGGLE_PASSWORD_MODAL':
+            return { ...state, showPasswordModal: !state.showPasswordModal }
         case 'users/TOGGLE_DELETE_CONFIRMATION':
             return { ...state, showDeleteConfirmation: !state.showDeleteConfirmation }
         default:
@@ -113,6 +115,7 @@ const editor = (state: any =initialState.editor, action: any) => {
                 ...state, 
                 inEdit: action.payload,
                 editLocked: true,
+                userInEdit: state.data.filter((u: User) => u.id === action.payload),
                 editIndex: state.data.findIndex((u: any) => u.id === action.payload)
             } : state;
         case 'users/CHANGE_ITEM':

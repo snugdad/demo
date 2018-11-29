@@ -22,9 +22,11 @@ import {
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import { 
-  CheckboxCell, 
+  AlertDialog,
+  CheckboxCell,
+  PasswordModal,
   ToolbarButtons, 
-  AlertDialog } from './components'
+  } from './components'
 
 interface UserGridProps {
   data: User[];
@@ -32,7 +34,6 @@ interface UserGridProps {
   filter: CompositeFilterDescriptor;
   inEdit: string | null;
   editLocked: boolean;
-  showPasswordColumn: boolean;
   onSortChange(e: GridSortChangeEvent): void;
   onRowClick(e: GridRowClickEvent): void;
   onItemChange(e: GridItemChangeEvent): void;
@@ -144,7 +145,6 @@ class UserGrid extends Component<UserGridProps, {}> {
       data,
       filter,
       inEdit,
-      showPasswordColumn,
       sort,
 
       /* Action Creators from mapDispatchToProps */
@@ -172,6 +172,7 @@ class UserGrid extends Component<UserGridProps, {}> {
     return (
       <React.Fragment>
         <AlertDialog/>
+        <PasswordModal/>
         <Paper style={styles.paper}>
         <Grid style={styles.grid}
           data={tableData}
@@ -189,9 +190,7 @@ class UserGrid extends Component<UserGridProps, {}> {
         <GridToolbar>
           <ToolbarButtons/>
         </GridToolbar>
-          {[ this._columns,
-           /* Optionally render password column */
-          showPasswordColumn ? <Column key="password" field="password" title="Password"/> : null ]}
+          {[ this._columns]}
         </Grid>
         </Paper>
         <Button onClick={getAllUsers}>
@@ -215,7 +214,6 @@ function mapStateToProps(state: DevGridState) {
     data: state.editor.data,
     inEdit: state.editor.inEdit,
     editLocked: state.editor.editLocked,
-    showPasswordColumn: state.ui.showPasswordColumn,
     sort: state.sort,
     filter: state.filter,
   }

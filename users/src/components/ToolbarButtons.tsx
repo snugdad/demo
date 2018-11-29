@@ -57,8 +57,8 @@ class ToolbarButtons extends Component <any, {}> {
 
   render () {
     const {
-      togglePasswordColumn,
-      showPasswordColumn,
+      togglePasswordModal,
+      showPasswordModal,
       cancelChanges,
       enterCreateMode,
       backupData,
@@ -107,11 +107,11 @@ class ToolbarButtons extends Component <any, {}> {
         <CancelIcon style={styles.icon} />
         Cancel
       </Button>
-      <Button variant="contained" size="small" style={styles.buttonRight}
-        onClick={togglePasswordColumn}>
+      {inEdit !== null && <Button variant="contained" size="small" style={styles.buttonRight}
+        onClick={togglePasswordModal}>
         <VpnKey style={styles.icon}/>
-        {showPasswordColumn ? "Finish" : "Manage Passwords"}
-      </Button>
+        Manage Password
+      </Button>}
 
     </div>
   );
@@ -124,7 +124,7 @@ function mapStateToProps (state: any) {
     tableData: state.editor.data,
     inEdit: state.editor.inEdit,
     classes: styles,
-    showPasswordColumn: state.ui.showPasswordColumn,
+    showPasswordModal: state.ui.showPasswordModal,
     showDeleteConfirmation: state.ui.showDeleteConfirmation
   }
 }
@@ -146,8 +146,8 @@ function mapDispatchToProps (dispatch: any) {
     softDeleteUser: (toDelete: User) =>{
       dispatch(ActionGroup.softDeleteUser(toDelete))
     },
-    togglePasswordColumn: () => {
-      dispatch(ActionGroup.togglePasswordColumn())
+    togglePasswordModal: () => {
+      dispatch(ActionGroup.togglePasswordModal())
     },
     toggleDeleteConfirmation: () => {
       dispatch(ActionGroup.toggleDeleteConfirmation())

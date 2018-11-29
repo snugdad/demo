@@ -67,8 +67,8 @@ export interface CloseAlertDialog {
     type: 'CLOSE_ALERT_DIALOG'
 }
 
-export interface TogglePasswordColumn {
-    type: 'users/TOGGLE_PASSWORD_COLUMN'
+export interface TogglePasswordModal {
+    type: 'users/TOGGLE_PASSWORD_MODAL'
 }
 
 export interface ToggleDeleteConfirmation {
@@ -119,7 +119,9 @@ export const changeFilter = (filter: CompositeFilterDescriptor): ChangeFilter =>
 
 export const syncData = (data: User[]): SyncData => ({
     type: 'users/SYNC_DATA',
-    payload: data,
+    payload: data.map((u: User) => {
+        return {...u, password: ""}
+    }),
 })
 
 export const enterCreateMode = (): EnterCreateMode => ({
@@ -135,12 +137,17 @@ export const closeAlertDialog = (): CloseAlertDialog => ({
     type: 'CLOSE_ALERT_DIALOG',
 })
 
-export const togglePasswordColumn = (): TogglePasswordColumn => ({
-    type: 'users/TOGGLE_PASSWORD_COLUMN'
+export const togglePasswordModal = (): TogglePasswordModal => ({
+    type: 'users/TOGGLE_PASSWORD_MODAL'
 })
 
 export const toggleDeleteConfirmation = (): ToggleDeleteConfirmation => ({
     type: 'users/TOGGLE_DELETE_CONFIRMATION',
+})
+
+export const changeUserPassword = (patch: any) => ({
+    type: 'users/CHANGE_USER_PASSWORD',
+    payload: patch,
 })
 
 export type Action = 
