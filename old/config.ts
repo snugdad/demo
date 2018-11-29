@@ -13,7 +13,7 @@ export default {
         "behaviorProps": {
             "onRowClick": "UserManagementActions.selectRow",
             "onSortChange": "UserManagementActions.changeSort",
-            "onItemChange": "UserManagementActions.changeUserData"
+            "onItemChange": "UserManagementActions.changeItem"
         }
     }
 }
